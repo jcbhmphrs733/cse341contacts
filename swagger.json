@@ -5,7 +5,7 @@
     "description": "API for managing users",
     "version": "1.0.0"
   },
-  "host": "https://cse341contacts-iolq.onrender.com",
+  "host": "cse341contacts-iolq.onrender.com",
   "basePath": "/",
   "schemes": [
     "https"
