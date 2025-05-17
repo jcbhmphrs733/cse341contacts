@@ -25,6 +25,39 @@ const createUser = async (req, res) => {
     email: req.body.email,
     favoriteColor: req.body.favoriteColor,
     birthday: req.body.birthday
+  };
+  const response = await mongodb.getDatabase().collection("users").insertOne(user);
+  if (response.acknowledged > 0) {
+    res.status(200).send();
+  } else {
+    res.status(500).json(response.error || "An error occurred while creating the user.");
+  }     
+};
+
+const updateUser = async (req, res) => {
+  const userId = new ObjectId(req.params.id);
+  const user = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    favoriteColor: req.body.favoriteColor,
+    birthday: req.body.birthday
+  };
+  const response = await mongodb.getDatabase().collection("users").replaceOne({ _id: userId }, user);
+  if (response.modifiedCount > 0) {
+    res.status(200).send();
+  } else {
+    res.status(500).json(response.error || "An error occurred while updating the user.");
+  }
+};
+
+const deleteUser = async (req, res) => {
+  const userId = new ObjectId(req.params.id);
+  const response = await mongodb.getDatabase().collection("users").deleteOne({ _id: userId });
+  if (response.deletedCount > 0) {
+    res.status(200).send();
+  } else {
+    res.status(500).json(response.error || "An error occurred while deleting the user.");
   }
 };
 
